@@ -22,8 +22,10 @@
 
 - (void)processObject:(id<ICFinancialFlow>)object {
     self.state = ICObjectBusy;
+    
     [self takeMoneyFromObject:object];
     [self performObjectSpecificOperation:object];
+    
     self.state = ICObjectFree;
 }
 
