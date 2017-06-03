@@ -22,8 +22,12 @@ const static NSUInteger ICDefaultExperience = 5;
     return self;
 }
 
+- (void)makeProfit {
+    self.salary = self.money;
+}
+
 - (void)performObjectSpecificOperation:(id)object {
-    
+    [self makeProfit];
 }
 
 - (void)processObject:(ICEmployee *)object {

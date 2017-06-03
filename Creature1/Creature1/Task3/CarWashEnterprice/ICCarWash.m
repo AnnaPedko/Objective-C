@@ -95,7 +95,7 @@ const static NSUInteger ICDefaultCountOfRooms = 3;
         ICDirector *director = [self freeEmployeeWithClass:[ICDirector class]];
         [director processObject:accountant];
         
-        NSLog (@"Profit = %lu",director.money);
+        NSLog (@"Profit = %lu",director.salary);
     }
 }
 
