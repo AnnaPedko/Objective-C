@@ -11,6 +11,11 @@
 
 const static NSUInteger ICDefaultExperience = 5;
 
+@interface ICDirector()
+- (void)makeProfit;
+
+@end
+
 @implementation ICDirector
 
 - (instancetype)init {
@@ -28,10 +33,6 @@ const static NSUInteger ICDefaultExperience = 5;
 
 - (void)performObjectSpecificOperation:(id)object {
     [self makeProfit];
-}
-
-- (void)processObject:(ICEmployee *)object {
-    [super processObject:object];
 }
 
 @end

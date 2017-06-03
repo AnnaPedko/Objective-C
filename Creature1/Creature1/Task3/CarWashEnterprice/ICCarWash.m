@@ -19,6 +19,16 @@
 const static NSUInteger ICDefaultMoney = 400;
 const static NSUInteger ICDefaultCountOfRooms = 3;
 
+@interface ICCarWash ()
+@property (nonatomic, assign)   NSUInteger  money;
+@property (nonatomic, retain)   ICBuilding  *adminBuilding;
+@property (nonatomic, retain)   ICBuilding  *washBox;
+
+- (void)washCars:(NSArray *)cars;
+- (id<ICFinancialFlow>)freeEmployeeWithClass:(Class)cls;
+
+@end
+
 @implementation ICCarWash
 
 #pragma mark - 
@@ -32,53 +42,19 @@ const static NSUInteger ICDefaultCountOfRooms = 3;
 }
 
 - (instancetype)init {
-    
-        self.money = ICDefaultMoney;
-        self.adminBuilding = [ICBuilding object];
-        self.washBox = [ICBuilding object];
-    
-        [self prepareEnterprise:self.adminBuilding
-                      withRooms:ICDefaultCountOfRooms
-                       andStaff:@[[ICAccountant class], [ICDirector class], [ICWasher class]]];
-        [self prepareEnterprise:self.washBox
-                      withRooms:ICDefaultCountOfRooms
-                       andStaff:@[[ICWasher class]]];
+    self = [super init];
+    self.money = ICDefaultMoney;
+    self.adminBuilding = [ICBuilding object];
+    self.washBox = [ICBuilding object];
+
+    [self prepareEnterprise:self.adminBuilding
+                  withRooms:ICDefaultCountOfRooms
+                   andStaff:@[[ICAccountant class], [ICDirector class], [ICWasher class]]];
+    [self prepareEnterprise:self.washBox
+                  withRooms:ICDefaultCountOfRooms
+                   andStaff:@[[ICWasher class]]];
     
     return self;
-}
-
-#pragma mark - 
-#pragma mark Private Methods
-
-- (void)prepareEnterprise:(ICBuilding *)building withRooms:(NSUInteger)countOfRooms andStaff:(NSArray *)staff {
-    NSArray * rooms = [ICRoom objectsWithCount:countOfRooms];
-    [building addRooms:rooms];
-    for (ICRoom *room in building.rooms) {
-        for (id employee in staff) {
-            [room addObject:[employee object]];
-        }
-    }
-}
-
-- (id<ICFinancialFlow>)freeEmployeeWithClass:(Class)cls {
-    NSArray *employeesWithClass = [self employeesWithClass:cls];
-    
-    return [[employeesWithClass filteredArrayWithBlock:^BOOL(ICEmployee *employee) {
-        return employee.state == ICObjectFree;
-    }]firstObject];
-}
-
-- (NSArray *)employeesWithClass:(Class)cls {
-    NSMutableArray *employees = [NSMutableArray object];
-    NSArray *enterprise = @[self.adminBuilding, self.washBox];
-    for (ICBuilding * building in enterprise) {
-        NSArray* specificEmmployees = [building employeesWithClass:cls];
-        if (specificEmmployees.count > 0) {
-            [employees addObjectsFromArray:specificEmmployees];
-        }
-    }
-    
-    return [[employees copy] autorelease];
 }
 
 #pragma mark - 
@@ -97,6 +73,39 @@ const static NSUInteger ICDefaultCountOfRooms = 3;
         
         NSLog (@"Profit = %lu",director.salary);
     }
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
+- (void)prepareEnterprise:(ICBuilding *)building withRooms:(NSUInteger)countOfRooms andStaff:(NSArray *)staff {
+    NSArray * rooms = [ICRoom objectsWithCount:countOfRooms];
+    [building addRooms:rooms];
+    for (ICRoom *room in building.rooms) {
+        for (id employee in staff) {
+            [room addObject:[employee object]];
+        }
+    }
+}
+
+- (id<ICFinancialFlow>)freeEmployeeWithClass:(Class)cls {
+    NSArray *employeesWithClass = [self employeesWithClass:cls];
+    
+    return [[employeesWithClass filteredArrayWithBlock:^BOOL(ICEmployee *employee) {
+        return employee.state == ICObjectFree;}]firstObject];
+}
+
+- (NSArray *)employeesWithClass:(Class)cls {
+    NSMutableArray *employees = [NSMutableArray object];
+    NSArray *enterprise = @[self.adminBuilding, self.washBox];
+    for (ICBuilding * building in enterprise) {
+        NSArray* specificEmmployees = [building employeesWithClass:cls];
+        if (specificEmmployees.count > 0) {
+            [employees addObjectsFromArray:specificEmmployees];
+        }
+    }
+    
+    return [[employees copy] autorelease];
 }
 
 @end

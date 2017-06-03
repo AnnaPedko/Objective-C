@@ -30,7 +30,6 @@ const static double ICInterestSalary = 0.1;
 #pragma Overriden Methods
 
 - (void)performObjectSpecificOperation:(id)object {
-    [self takeMoneyFromObject:object];
     [self calculateSalary:object];
 }
 
@@ -40,10 +39,6 @@ const static double ICInterestSalary = 0.1;
 - (void)calculateSalary:(ICEmployee *)employee {
     employee.salary = ICInterestSalary * self.money;
     self.money -= employee.salary;
-}
-
-- (void)processObject:(ICEmployee *)object {
-    [super processObject:object];
 }
 
 @end
