@@ -12,4 +12,6 @@
 
 @interface ICCarWash : NSObject
 
+- (void)washCars:(NSArray *)cars;
+
 @end

@@ -24,7 +24,6 @@ const static NSUInteger ICDefaultCountOfRooms = 3;
 @property (nonatomic, retain)   ICBuilding  *adminBuilding;
 @property (nonatomic, retain)   ICBuilding  *washBox;
 
-- (void)washCars:(NSArray *)cars;
 - (id<ICFinancialFlow>)freeEmployeeWithClass:(Class)cls;
 
 @end
